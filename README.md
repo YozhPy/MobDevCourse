@@ -1,7 +1,7 @@
 # MobDevCourse (Нікішенко Єгор ТІ-81)
 
-##№ This is my first lab for Mobile Application Development.
-##№ In this lab I've completed next pull of tasks:
+### This is my first lab for Mobile Application Development.
+### In this lab I've completed next pull of tasks:
 
  1) Створити простий мобільний застосунок
     1.2) Застосунок повинен містити Ім’я Прізвище
