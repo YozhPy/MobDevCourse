@@ -1,4 +1,4 @@
-# MobDevCourse
+# MobDevCourse (Нікішенко Єгор ТІ-81)
 
 ## This is my first lab for Mobile Application Development.
 ## In this lab I've completed next pull of tasks:
