@@ -15,7 +15,7 @@ class Burger {
   Burger(this.burgerName, this._price, this.hasDiscount, this._callories);
 
   //named constructor
-  Burger.withoutName(this._price, this._callories,
+  Burger.namedConstruct(this._price, this._callories,
       {this.burgerName = "Unknown", this.hasDiscount = false});
 }
 
@@ -49,7 +49,7 @@ class Menu {
   dynamic get isDiscount => burger.hasDiscount;
   Menu(burgName, burgPrice, burgCal, drinkName, drinkPrice, drinkVolume,
       [sauceName = "None", disc = false]) {
-    burger = Burger.withoutName(burgPrice, burgCal,
+    burger = Burger.namedConstruct(burgPrice, burgCal,
         burgerName: burgName, hasDiscount: disc);
     drink = Drink(drinkName, drinkPrice, drinkVolume);
     sauce = sauceName;
