@@ -1,5 +1,5 @@
 // ignore_for_file: prefer_const_constructors
-
+// zhopa vonyaet
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 
@@ -23,6 +23,8 @@ const diyaDocumentsBorders = <String, Color>{
   'green': Color(0xffC0EBB5),
   'flesh': Color(0xffF8D6CD),
 };
+
+// AYSABDOAUSHFBKAJDSBFKADSJBFKADSBHFADSHFALB
 
 void main() => runApp(MaterialApp(
       home: Diya(),
@@ -48,14 +50,12 @@ class Diya extends StatelessWidget {
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: const [
-                              Expanded(
-                                  child: Image(
+                              Image(
                                 image: AssetImage("assets/main_logo.png"),
                                 width: 50.0,
                                 height: 50.0,
-                              )),
-                              Expanded(
-                                  child: Icon(Icons.qr_code_scanner, size: 30))
+                              ),
+                              Icon(Icons.qr_code_scanner, size: 30)
                             ])),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(40, 40, 40, 0),
