@@ -24,19 +24,101 @@ const diyaDocumentsBorders = <String, Color>{
   'flesh': Color(0xffF8D6CD),
 };
 
-void main() => runApp(MaterialApp(
-      home: Diya(),
+void main() => runApp(DiyaApp());
+
+class DiyaApp extends StatefulWidget {
+  const DiyaApp({Key? key}) : super(key: key);
+
+  @override
+  DiyaAppState createState() => DiyaAppState();
+}
+
+class DiyaAppState extends State<DiyaApp> with SingleTickerProviderStateMixin {
+  late TabController controller;
+  int cIndex = 0;
+
+  // CREATE OUR WINDOWS
+
+  static final List<Widget> _tabs = <Widget>[
+    Diya(
+      colorName: 'green',
+      documentName: "Внутрішній\nCOVID19-сертифікат",
+      documentText: '''Дата народження: 26.12.2000
+                       Дійсний до: 09.10.2022
+                       Номер\nсертифікату: URN:ASDJANSFOJNASFJIASFNasjdifn''',
+    ),
+    Diya(
+      colorName: 'purple',
+      documentName: "Закордонний\nПаспорт <тризуб>",
+      documentText: '''Дата народження: 26.12.2000
+                       Дійсний до: 09.10.2022
+                       Номер: F534516549''',
+    ),
+    Diya(
+      colorName: 'blue',
+      documentName: "Паспорт громадянина\nУкраїни <тризуб>",
+      documentText: '''Дата народження: 26.12.2000
+                       Дійсний до: 09.10.2022
+                       Номер: 00655464644564''',
+    ),
+    Diya(
+      colorName: 'purple',
+      documentName: "Студентський\nквиток",
+      documentText: '''КВ 12225356
+                       Форма навчання: Денна
+                       Дійсний до: 30.06.2022
+                       \nНТУУ "КПІ" ім. Ігоря Сікорського ''',
+    ),
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    controller = TabController(length: 4, vsync: this);
+    controller.addListener(() {
+      setState(() {
+        cIndex = controller.index;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  TabBarView makeTabBarView(tabs) {
+    return TabBarView(children: tabs, controller: controller);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        home: Scaffold(
+      body: TabBarView(
+        children: _tabs,
+        controller: controller,
+      ),
     ));
+  }
+}
 
 class Diya extends StatelessWidget {
-  const Diya({Key? key}) : super(key: key);
+  final String colorName, documentName, documentText;
+
+  const Diya({
+    Key? key,
+    required this.colorName,
+    required this.documentName,
+    required this.documentText,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //backgroundColor: diyaWindowsColors['green'],
       body: Container(
-          decoration: BoxDecoration(color: diyaWindowsColors['green']),
+          decoration: BoxDecoration(color: diyaWindowsColors[colorName]),
           child: Padding(
               padding: EdgeInsets.only(top: 60),
               child: Column(
@@ -60,37 +142,35 @@ class Diya extends StatelessWidget {
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(
-                          children: const [
+                          children: [
                             Document(
-                              documentName: "Внутрішній\nCOVID19-сертифікат",
+                              documentName: documentName,
                               imageSrc: "assets/4head_2.jpg",
-                              documentText: '''Дата народження: 26.12.2000
-                                            Дійсний до: 09.10.2022
-                                            Номер\nсертифікату: URN:ASDJANSFOJNASFJIASFNasjdifn''',
-                              colorName: "green",
-                              borders: "green",
+                              documentText: documentText,
+                              colorName: colorName,
+                              borders: colorName,
                             ),
-                            SizedBox(width: 30),
-                            Document(
-                              documentName: "Закордонний\nПаспорт <тризуб>",
-                              imageSrc: "assets/4head_2.jpg",
-                              documentText: '''Дата народження: 26.12.2000
-                                              Дійсний до: 09.10.2022
-                                            Номер: F534516549''',
-                              colorName: "purple",
-                              borders: "purple",
-                            ),
-                            SizedBox(width: 30),
-                            Document(
-                              documentName: "Паспорт громадянина\nУкраїни"
-                                  "<тризуб>",
-                              imageSrc: "assets/4head_2.jpg",
-                              documentText: '''Дата народження: 26.12.2000
-                                            Дійсний до: 09.10.2022
-                                            Номер: 00655464644564''',
-                              colorName: "blue",
-                              borders: "blue",
-                            ),
+                            // SizedBox(width: 30),
+                            // Document(
+                            //   documentName: "Закордонний\nПаспорт <тризуб>",
+                            //   imageSrc: "assets/4head_2.jpg",
+                            //   documentText: '''Дата народження: 26.12.2000
+                            //                   Дійсний до: 09.10.2022
+                            //                 Номер: F534516549''',
+                            //   colorName: "purple",
+                            //   borders: "purple",
+                            // ),
+                            // SizedBox(width: 30),
+                            // Document(
+                            //   documentName: "Паспорт громадянина\nУкраїни"
+                            //       "<тризуб>",
+                            //   imageSrc: "assets/4head_2.jpg",
+                            //   documentText: '''Дата народження: 26.12.2000
+                            //                 Дійсний до: 09.10.2022
+                            //                 Номер: 00655464644564''',
+                            //   colorName: "blue",
+                            //   borders: "blue",
+                            // ),
                             //SizedBox(width: 30),
                           ],
                         ),
@@ -115,7 +195,7 @@ class Diya extends StatelessWidget {
           selectedFontSize: 12,
           elevation: 0.0,
           iconSize: 30,
-          backgroundColor: Color(0xffC0EBB5),
+          backgroundColor: diyaWindowsColors[colorName],
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.feed_sharp),
