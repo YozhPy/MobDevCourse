@@ -17,11 +17,14 @@ class MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
   static const TextStyle optionStyle = TextStyle(color: Colors.red);
 
   static List<Widget> _tabs = <Widget>[
-    Text(
-      'First Page',
-      style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+    Scaffold(
+      appBar: AppBar(title: const Text("FIRST PAGE")),
+      body: Text("First page", style: TextStyle(color: Colors.red)),
     ),
-    Text("Second page", style: TextStyle(color: Colors.red)),
+    Scaffold(
+      appBar: AppBar(title: const Text("Second PAGE")),
+      body: Text("Second page", style: TextStyle(color: Colors.red)),
+    ),
   ];
 
   @override
