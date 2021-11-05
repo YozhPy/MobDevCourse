@@ -150,28 +150,6 @@ class Diya extends StatelessWidget {
                               colorName: colorName,
                               borders: colorName,
                             ),
-                            // SizedBox(width: 30),
-                            // Document(
-                            //   documentName: "Закордонний\nПаспорт <тризуб>",
-                            //   imageSrc: "assets/4head_2.jpg",
-                            //   documentText: '''Дата народження: 26.12.2000
-                            //                   Дійсний до: 09.10.2022
-                            //                 Номер: F534516549''',
-                            //   colorName: "purple",
-                            //   borders: "purple",
-                            // ),
-                            // SizedBox(width: 30),
-                            // Document(
-                            //   documentName: "Паспорт громадянина\nУкраїни"
-                            //       "<тризуб>",
-                            //   imageSrc: "assets/4head_2.jpg",
-                            //   documentText: '''Дата народження: 26.12.2000
-                            //                 Дійсний до: 09.10.2022
-                            //                 Номер: 00655464644564''',
-                            //   colorName: "blue",
-                            //   borders: "blue",
-                            // ),
-                            //SizedBox(width: 30),
                           ],
                         ),
                       ),
