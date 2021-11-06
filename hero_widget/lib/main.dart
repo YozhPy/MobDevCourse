@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors
+// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -59,34 +59,36 @@ class _HeroAppState extends State<HeroApp> with SingleTickerProviderStateMixin {
                     tag: 'pasosh_hero',
                     text1: 'Группа "Пасош"',
                     text2:
-                        "Рок-группу «Пасош» считали проповедником вечной молодости и нигилизма, русскими последователями пост-панка и рупором новой волны. Сами музыканты находили забавным механизм, по которому раздаются официальные ярлыки признания. Артисты полагали, что лучший промоушен – прийти и показать то, чем занимаешься, а не ждать, пока о тебе узнают.")));
+                        "Интересное название этой московской группы переводится с сербского «паспорт». Ребята играют музыку в жанре гаражного рока и пост-панка. Группа поёт о таких насущных вещах, как чувства и проблемы общества.  Эта музыка непременно впечатлит людей, неравнодушных к гаражному року и темам, которые музыканты затрагивают. «Пасош» не гонится за трендами, как многие поп-исполнители, и имеет 73 тысяч подписчиков в группе «Вконтакте».")));
           },
         ),
       );
     }),
-    Builder(builder: (context) {
-      return Center(
-        child: GestureDetector(
-          child: Container(
-              child: Hero(
-                  tag: 'uvula_hero',
-                  child: Image.network(
-                      'https://salvemusic.com.ua/wp-content/uploads/2021/02/uvula.jpg',
-                      width: 100,
-                      height: 50))),
-          onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => HeroExample(
-                    imageSrc:
-                        'https://salvemusic.com.ua/wp-content/uploads/2021/02/uvula.jpg',
+    Builder(
+      builder: (context) {
+        return Center(
+          child: GestureDetector(
+            child: Container(
+                child: Hero(
                     tag: 'uvula_hero',
-                    text1: 'Группа "Увула"',
-                    text2:
-                        "Группа “Увула” начала музыкальный путь в 2015 году. Несмотря на то, что непонятному названию сопутствует чуть уловимый флёр древности и народности, означает оно анатомическую часть нёба — язычок. Да и к фолку музыка коллектива не имеет никакого отношения. Исполнители сами затрудняются с определением жанра, играя негромкие песни с динамичными ритм-секциями и вдохновляясь различными течениями от пост-панка до русского “клубняка”.")));
-          },
-        ),
-      );
-    }),
+                    child: Image.network(
+                        'https://salvemusic.com.ua/wp-content/uploads/2021/02/uvula.jpg',
+                        width: 100,
+                        height: 50))),
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => HeroExample(
+                      imageSrc:
+                          'https://salvemusic.com.ua/wp-content/uploads/2021/02/uvula.jpg',
+                      tag: 'uvula_hero',
+                      text1: 'Группа "Увула"',
+                      text2:
+                          "Группа “Увула” начала музыкальный путь в 2015 году. Несмотря на то, что непонятному названию сопутствует чуть уловимый флёр древности и народности, означает оно анатомическую часть нёба — язычок. Да и к фолку музыка коллектива не имеет никакого отношения. Исполнители сами затрудняются с определением жанра, играя негромкие песни с динамичными ритм-секциями и вдохновляясь различными течениями от пост-панка до русского “клубняка”.")));
+            },
+          ),
+        );
+      },
+    ),
   ];
 
   @override
@@ -138,34 +140,10 @@ class _HeroAppState extends State<HeroApp> with SingleTickerProviderStateMixin {
                 ),
                 child: Center(
                   child: (Text(
-                    'My drawer Example',
-                    style: TextStyle(fontSize: 25, color: Colors.red),
+                    'Это тестовый Drawer',
+                    style: TextStyle(fontSize: 20, color: Colors.indigoAccent),
                   )),
                 ),
-              ),
-              ListTile(
-                title: const Text('Источник'),
-                onTap: () {
-                  cIndex = 0;
-                  tabController.animateTo(cIndex);
-                  Navigator.of(context).pop();
-                },
-              ),
-              ListTile(
-                title: const Text('Пасош'),
-                onTap: () {
-                  cIndex = 1;
-                  tabController.animateTo(cIndex);
-                  Navigator.of(context).pop();
-                },
-              ),
-              ListTile(
-                title: const Text('Увула'),
-                onTap: () {
-                  cIndex = 2;
-                  tabController.animateTo(cIndex);
-                  Navigator.of(context).pop();
-                },
               ),
               ListTile(
                 title: const Text('Источник'),
@@ -200,18 +178,19 @@ class _HeroAppState extends State<HeroApp> with SingleTickerProviderStateMixin {
         controller: tabController,
       ),
       bottomNavigationBar: BottomNavigationBar(
+        unselectedIconTheme: IconThemeData(color: Colors.tealAccent),
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+            icon: Icon(Icons.sentiment_dissatisfied),
+            label: 'Источник',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.circle),
-            label: 'Pikachu',
+            icon: Icon(Icons.music_note),
+            label: 'Пасош',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+            icon: Icon(Icons.group_work),
+            label: 'Увула',
           ),
         ],
         onTap: _onItemTapped,
@@ -221,10 +200,18 @@ class _HeroAppState extends State<HeroApp> with SingleTickerProviderStateMixin {
         builder: (context) {
           return FloatingActionButton(
             onPressed: () {
-              Scaffold.of(context).openDrawer();
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  backgroundColor: Colors.tealAccent,
+                  content: Text(
+                    "Ура, я почти закончил свою вторую лабу.",
+                    style: TextStyle(color: Colors.black),
+                  )));
             },
-            child: const Icon(Icons.navigation),
-            backgroundColor: Colors.blue,
+            child: const Icon(
+              Icons.navigation,
+              color: Colors.black,
+            ),
+            backgroundColor: Colors.tealAccent,
           );
         },
       ),
