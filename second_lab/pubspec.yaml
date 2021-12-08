@@ -27,6 +27,8 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  time: "^2.0.1"
+  intl: ^0.17.0
   flutter:
     sdk: flutter
 
@@ -61,6 +63,7 @@ flutter:
   assets:
     - assets/main_logo.png
     - assets/4head_2.jpg
+    - assets/qr_code.png
   
 
   # An image asset can refer to one or more resolution-specific "variants", see

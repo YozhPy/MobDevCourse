@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="443c3e33-5fa5-461b-9c3f-75d164a9bf3a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/second_lab/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/second_lab/lib/main.dart" afterDir="false" />
-    </list>
+    <list default="true" id="443c3e33-5fa5-461b-9c3f-75d164a9bf3a" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -24,7 +22,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="dart.analysis.tool.window.visible" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../MobileDevTempFiles/mobile-device-software-development-flutter-second_lab_1" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
@@ -50,7 +48,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="second_v2" />
+                        <option value="master" />
                       </list>
                     </value>
                   </entry>
@@ -61,5 +59,6 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
