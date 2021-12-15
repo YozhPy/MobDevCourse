@@ -1,8 +1,11 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'pages/documents.dart';
 import 'pages/services.dart';
 import 'pages/notifications.dart';
+import 'models/request.dart';
 
 const diyaWindowsColors = <String, Color>{
   'blue': Color(0xffb3c9e8),
@@ -27,14 +30,18 @@ const diyaDocumentsBorders = <String, Color>{
   'flesh': Color(0xffF8D6CD),
 };
 
+Map<int, CertificateRequest> requestsList = {};
+
 class Diya extends StatefulWidget {
   final String colorName, documentName, documentText;
+  final ValueChanged<CertificateRequest> addRequest;
 
   const Diya({
     Key? key,
     required this.colorName,
     required this.documentName,
     required this.documentText,
+    required this.addRequest,
   }) : super(key: key);
 
   @override
@@ -59,7 +66,9 @@ class _DiyaState extends State<Diya> {
         documentName: widget.documentName,
         documentText: widget.documentText,
       ),
-      ServicesPage(),
+      ServicesPage(
+        addRequest: widget.addRequest,
+      ),
       NotificationPage(),
       NotificationPage()
     ];
@@ -266,35 +275,158 @@ class _DocumentState extends State<Document> {
   }
 }
 
-showAlertDialog(BuildContext context) {
-  // set up the buttons
-  Widget cancelButton = TextButton(
-    child: Text("Cancel"),
-    onPressed: () {
-      Navigator.of(context).pop();
-    },
-  );
-  Widget continueButton = TextButton(
-    child: Text("Continue"),
-    onPressed: () {},
-  );
+class Notif extends StatelessWidget {
+  final int id;
+  final CertificateRequest req;
 
-  // set up the AlertDialog
-  AlertDialog alert = AlertDialog(
-    title: Text("AlertDialog"),
-    content:
-        Text("Would you like to continue learning how to use Flutter alerts?"),
-    actions: [
-      cancelButton,
-      continueButton,
-    ],
-  );
+  const Notif({
+    Key? key,
+    required this.id,
+    required this.req,
+  }) : super(key: key);
 
-  // show the dialog
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return alert;
-    },
-  );
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        width: 380.0,
+        height: 140.0,
+        margin: EdgeInsets.only(bottom: 15),
+        padding: const EdgeInsets.fromLTRB(15, 8, 15, 0),
+        decoration: BoxDecoration(
+          color: diyaDocumentsColors['pages'],
+          borderRadius: const BorderRadius.all(Radius.circular(15)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0),
+              spreadRadius: 5,
+              blurRadius: 5,
+              offset: const Offset(0, 3), // changes position of shadow
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Center(
+              child: Text(
+                "Заявка на отримання COVID-сертифікату",
+                style: TextStyle(
+                    fontSize: 11,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w300,
+                    fontFamily: 'eUkraine'),
+              ),
+            ),
+            Divider(
+              color: diyaWindowsColors['pages'],
+              thickness: 3,
+            ),
+            SizedBox(
+              height: 3,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                    flex: 3,
+                    child: Text(
+                      "Тип:",
+                      style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w300,
+                          fontFamily: 'eUkraine'),
+                    )),
+                Expanded(
+                    flex: 7,
+                    child: Center(
+                      child: Text(req.certColor,
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'eUkraine')),
+                    )),
+              ],
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                    flex: 3,
+                    child: Text(
+                      "Час:",
+                      style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w300,
+                          fontFamily: 'eUkraine'),
+                    )),
+                Expanded(
+                    flex: 7,
+                    child: Center(
+                      child: Text(req.time,
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'eUkraine')),
+                    )),
+              ],
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                    flex: 3,
+                    child: Text(
+                      "Статус:",
+                      style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w300,
+                          fontFamily: 'eUkraine'),
+                    )),
+                Expanded(
+                    flex: 7,
+                    child: Center(
+                      child: Text(req.isReady ? "Готова" : "Обробляється",
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'eUkraine')),
+                    )),
+              ],
+            ),
+            SizedBox(
+              height: 3,
+            ),
+            Divider(
+              color: diyaWindowsColors['pages'],
+              thickness: 3,
+            ),
+            Container(
+              width: 390,
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+              child: Text(
+                "ID заявки $id",
+                style: TextStyle(
+                    fontSize: 12,
+                    color: Color(0xffA0A0A0),
+                    fontWeight: FontWeight.w300,
+                    fontFamily: 'eUkraine'),
+                textAlign: TextAlign.right,
+              ),
+            ),
+          ],
+        ));
+  }
 }

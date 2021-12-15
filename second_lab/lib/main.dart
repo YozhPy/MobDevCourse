@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'components.dart';
+import 'models/request.dart';
 
 void main() => runApp(DiyaApp());
 
@@ -15,40 +16,15 @@ class DiyaApp extends StatefulWidget {
 class DiyaAppState extends State<DiyaApp> with SingleTickerProviderStateMixin {
   late TabController controller;
   int cIndex = 0;
+  int cRequests = 0;
 
   // CREATE OUR WINDOWS
-
-  static final List<Widget> _tabs = <Widget>[
-    Diya(
-      colorName: 'green',
-      documentName: "Внутрішній\nCOVID19-сертифікат",
-      documentText: '''Дата народження: 26.12.2000
-                       Дійсний до: 09.10.2022
-                       Номер\nсертифікату: URN:ASDJANSFOJNASFJIASFNasjdifn''',
-    ),
-    Diya(
-      colorName: 'purple',
-      documentName: "Закордонний\nПаспорт <тризуб>",
-      documentText: '''Дата народження: 26.12.2000
-                       Дійсний до: 09.10.2022
-                       Номер: F534516549''',
-    ),
-    Diya(
-      colorName: 'blue',
-      documentName: "Паспорт High Skill\nгромадянина України <тризуб>",
-      documentText: '''Дата народження: 26.12.2000
-                       Дійсний до: 01.01.2050
-                       Номер: ZxC322ZxC''',
-    ),
-    Diya(
-      colorName: 'purple',
-      documentName: "Студентський\nквиток",
-      documentText: '''КВ 12225356
-                       Форма навчання: Денна
-                       Дійсний до: 30.06.2022
-                       \nНТУУ "КПІ" ім. Ігоря Сікорського ''',
-    ),
-  ];
+  void _addRequestTap(CertificateRequest req) {
+    setState(() {
+      cRequests < 10 ? cRequests += 1 : cRequests = 1;
+      requestsList[cRequests] = req;
+    });
+  }
 
   @override
   void initState() {
@@ -73,6 +49,41 @@ class DiyaAppState extends State<DiyaApp> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> _tabs = <Widget>[
+      Diya(
+        colorName: 'green',
+        documentName: "Внутрішній\nCOVID19-сертифікат",
+        documentText: '''Дата народження: 26.12.2000
+                       Дійсний до: 09.10.2022
+                       Номер\nсертифікату: URN:ASDJANSFOJNASFJIASFNasjdifn''',
+        addRequest: _addRequestTap,
+      ),
+      Diya(
+        colorName: 'purple',
+        documentName: "Закордонний\nПаспорт <тризуб>",
+        documentText: '''Дата народження: 26.12.2000
+                       Дійсний до: 09.10.2022
+                       Номер: F534516549''',
+        addRequest: _addRequestTap,
+      ),
+      Diya(
+        colorName: 'blue',
+        documentName: "Паспорт громадянина\nУкраїни <тризуб>",
+        documentText: '''Дата народження: 26.12.2000
+                       Дійсний до: 01.01.2050
+                       Номер:\n ZxC322ZxC''',
+        addRequest: _addRequestTap,
+      ),
+      Diya(
+        colorName: 'purple',
+        documentName: "Студентський\nквиток",
+        documentText: '''КВ 12225356
+                       Форма навчання: Денна
+                       Дійсний до: 30.06.2022
+                       \nНТУУ "КПІ" ім. Ігоря Сікорського ''',
+        addRequest: _addRequestTap,
+      ),
+    ];
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(

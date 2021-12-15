@@ -1,14 +1,15 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_constructors_in_immutables, must_be_immutable
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../components.dart';
 import 'package:flutter/painting.dart';
-//import 'package:intl/intl.dart';
-//import 'package:flutter_emoji/flutter_emoji.dart';
+import 'package:second_lab/models/request.dart';
 
 class ServicesPage extends StatelessWidget {
-  late int _cnt = 0;
+  final ValueChanged<CertificateRequest> addRequest;
   ServicesPage({
+    required this.addRequest,
     Key? key,
   }) : super(key: key);
 
@@ -28,7 +29,7 @@ class ServicesPage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Row(
-                              children: const [
+                              children: [
                                 Image(
                                   image: AssetImage("assets/main_logo.png"),
                                   width: 50.0,
@@ -42,10 +43,21 @@ class ServicesPage extends StatelessWidget {
                                           color: Colors.black,
                                           fontWeight: FontWeight.w600,
                                           fontFamily: 'eUkraine')),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 120),
+                                  child: IconButton(
+                                    icon: Icon(
+                                      CupertinoIcons.delete_solid,
+                                      size: 40,
+                                    ),
+                                    onPressed: () {
+                                      showKillDialog(context);
+                                    },
+                                  ),
                                 )
                               ],
                             ),
-                            const Icon(Icons.qr_code_scanner, size: 30)
                           ])),
                   SizedBox(height: 40),
                   Flexible(
@@ -75,7 +87,6 @@ class ServicesPage extends StatelessWidget {
                                     GestureDetector(
                                       onTap: () {
                                         showAlertDialog(context);
-                                        _cnt = _cnt + 1;
                                       },
                                       child: Column(children: [
                                         Row(
@@ -106,5 +117,130 @@ class ServicesPage extends StatelessWidget {
                                 ]))),
                   )
                 ])));
+  }
+
+  showAlertDialog(BuildContext context) {
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      backgroundColor: diyaWindowsColors['pages'],
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20))),
+      titleTextStyle: TextStyle(
+          fontSize: 22,
+          color: Colors.black,
+          fontWeight: FontWeight.w700,
+          fontFamily: 'eUkraine'),
+      titlePadding: EdgeInsets.fromLTRB(24, 24, 12, 24),
+      title: Text("Підтвердження заявки"),
+      contentTextStyle: TextStyle(
+          fontSize: 16,
+          color: Colors.black,
+          fontWeight: FontWeight.w500,
+          fontFamily: 'eUkraine'),
+      content: Text("Заявку на який сертифікат ви хочете отримати?"),
+      actions: [
+        ElevatedButton(
+            child: Text(
+              "Зелений",
+              style: TextStyle(color: Colors.black),
+            ),
+            onPressed: () {
+              addRequest(CertificateRequest(DateTime.now(), "Зелений"));
+              Navigator.of(context).pop();
+            },
+            style: ElevatedButton.styleFrom(
+                primary: diyaDocumentsColors['pages'],
+                textStyle: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w300,
+                    fontFamily: 'eUkraine'))),
+        ElevatedButton(
+            child: const Text("Жовтий(1 доза)",
+                style: TextStyle(color: Colors.black)),
+            onPressed: () {
+              addRequest(CertificateRequest(DateTime.now(), "Жовтий"));
+              Navigator.of(context).pop();
+            },
+            style: ElevatedButton.styleFrom(
+                primary: diyaDocumentsColors['pages'],
+                textStyle: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w300,
+                    fontFamily: 'eUkraine'))),
+        ElevatedButton(
+            child: const Text("Назад", style: TextStyle(color: Colors.black)),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            style: ElevatedButton.styleFrom(
+                primary: diyaDocumentsColors['pages'],
+                textStyle: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w300,
+                    fontFamily: 'eUkraine'))),
+      ],
+    );
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  showKillDialog(BuildContext context) {
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      backgroundColor: diyaWindowsColors['pages'],
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(20))),
+      titleTextStyle: TextStyle(
+          fontSize: 22,
+          color: Colors.black,
+          fontWeight: FontWeight.w700,
+          fontFamily: 'eUkraine'),
+      titlePadding: EdgeInsets.fromLTRB(24, 24, 12, 24),
+      title: Text("Видалення всіх заявок"),
+      contentTextStyle: TextStyle(
+          fontSize: 16,
+          color: Colors.black,
+          fontWeight: FontWeight.w500,
+          fontFamily: 'eUkraine'),
+      content: Text("Ви справді хочете видалити всі заявки?"),
+      actions: [
+        ElevatedButton(
+            child: Text(
+              "Так",
+              style: TextStyle(color: Colors.black),
+            ),
+            onPressed: () {
+              requestsList.clear();
+              Navigator.of(context).pop();
+            },
+            style: ElevatedButton.styleFrom(
+                primary: diyaDocumentsColors['pages'],
+                textStyle: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w300,
+                    fontFamily: 'eUkraine'))),
+        ElevatedButton(
+            child: const Text("Ні", style: TextStyle(color: Colors.black)),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            style: ElevatedButton.styleFrom(
+                primary: diyaDocumentsColors['pages'],
+                textStyle: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w300,
+                    fontFamily: 'eUkraine'))),
+      ],
+    );
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }
