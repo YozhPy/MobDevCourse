@@ -82,7 +82,7 @@ class ServicesPage extends StatelessWidget {
                                     thickness: 3,
                                   ),
                                   const SizedBox(height: 10),
-                                  for (int i = 0; i < 6; i++)
+                                  for (int i = 0; i < 2; i++)
                                     GestureDetector(
                                       onTap: () {
                                         showAlertDialog(context);

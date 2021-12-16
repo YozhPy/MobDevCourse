@@ -18,6 +18,7 @@ class NotificationPage extends StatelessWidget {
     int index = 0;
     Provider.of<RequestsList>(context, listen: false).items.forEach((element) {
       curNotifications.add(Notif(id: index, req: element).build(context));
+      index += 1;
     });
     return Container(
         decoration: BoxDecoration(color: diyaWindowsColors['pages']),

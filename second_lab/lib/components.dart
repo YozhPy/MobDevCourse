@@ -413,7 +413,7 @@ class Notif extends StatelessWidget {
               width: 390,
               padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
               child: Text(
-                "ID заявки $id",
+                "ID заявки ${id + 1}",
                 style: TextStyle(
                     fontSize: 12,
                     color: Color(0xffA0A0A0),
