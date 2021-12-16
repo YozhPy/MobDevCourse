@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:second_lab/models/request.dart';
 import '../components.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,6 +14,11 @@ class NotificationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> curNotifications = [];
+    int index = 0;
+    Provider.of<RequestsList>(context, listen: false).items.forEach((element) {
+      curNotifications.add(Notif(id: index, req: element).build(context));
+    });
     return Container(
         decoration: BoxDecoration(color: diyaWindowsColors['pages']),
         child: Column(
@@ -44,11 +51,9 @@ class NotificationPage extends StatelessWidget {
                         const Icon(CupertinoIcons.book_solid, size: 40)
                       ])),
               SizedBox(height: 50),
-              for (var component in requestsList.entries)
-                Notif(
-                  id: component.key,
-                  req: component.value,
-                ),
+              Column(
+                children: curNotifications,
+              )
             ]));
   }
 }

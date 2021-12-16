@@ -30,18 +30,16 @@ const diyaDocumentsBorders = <String, Color>{
   'flesh': Color(0xffF8D6CD),
 };
 
-Map<int, CertificateRequest> requestsList = {};
+//Map<int, CertificateRequest> requestsList = {};
 
 class Diya extends StatefulWidget {
   final String colorName, documentName, documentText;
-  final ValueChanged<CertificateRequest> addRequest;
 
   const Diya({
     Key? key,
     required this.colorName,
     required this.documentName,
     required this.documentText,
-    required this.addRequest,
   }) : super(key: key);
 
   @override
@@ -66,9 +64,7 @@ class _DiyaState extends State<Diya> {
         documentName: widget.documentName,
         documentText: widget.documentText,
       ),
-      ServicesPage(
-        addRequest: widget.addRequest,
-      ),
+      ServicesPage(),
       NotificationPage(),
       NotificationPage()
     ];
@@ -428,5 +424,25 @@ class Notif extends StatelessWidget {
             ),
           ],
         ));
+  }
+}
+
+class ServiceBox extends StatelessWidget {
+  const ServiceBox({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: const [
+        Text("😷", style: TextStyle(fontFamily: 'NotoEmoji', fontSize: 28)),
+        Text("Заявка на отримання\nCOVID-сертифікату",
+            style: TextStyle(
+                fontSize: 20,
+                color: Colors.black,
+                fontWeight: FontWeight.w500,
+                fontFamily: 'eUkraine')),
+      ],
+    );
   }
 }

@@ -2,14 +2,13 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../components.dart';
 import 'package:flutter/painting.dart';
 import 'package:second_lab/models/request.dart';
 
 class ServicesPage extends StatelessWidget {
-  final ValueChanged<CertificateRequest> addRequest;
   ServicesPage({
-    required this.addRequest,
     Key? key,
   }) : super(key: key);
 
@@ -89,23 +88,7 @@ class ServicesPage extends StatelessWidget {
                                         showAlertDialog(context);
                                       },
                                       child: Column(children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                          children: const [
-                                            Text("😷",
-                                                style: TextStyle(
-                                                    fontFamily: 'NotoEmoji',
-                                                    fontSize: 28)),
-                                            Text(
-                                                "Заявка на отримання\nCOVID-сертифікату",
-                                                style: TextStyle(
-                                                    fontSize: 20,
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.w500,
-                                                    fontFamily: 'eUkraine')),
-                                          ],
-                                        ),
+                                        ServiceBox(),
                                         const SizedBox(height: 10),
                                         if (i != 5)
                                           Divider(
@@ -121,65 +104,67 @@ class ServicesPage extends StatelessWidget {
 
   showAlertDialog(BuildContext context) {
     // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      backgroundColor: diyaWindowsColors['pages'],
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20))),
-      titleTextStyle: TextStyle(
-          fontSize: 22,
-          color: Colors.black,
-          fontWeight: FontWeight.w700,
-          fontFamily: 'eUkraine'),
-      titlePadding: EdgeInsets.fromLTRB(24, 24, 12, 24),
-      title: Text("Підтвердження заявки"),
-      contentTextStyle: TextStyle(
-          fontSize: 16,
-          color: Colors.black,
-          fontWeight: FontWeight.w500,
-          fontFamily: 'eUkraine'),
-      content: Text("Заявку на який сертифікат ви хочете отримати?"),
-      actions: [
-        ElevatedButton(
-            child: Text(
-              "Зелений",
-              style: TextStyle(color: Colors.black),
-            ),
-            onPressed: () {
-              addRequest(CertificateRequest(DateTime.now(), "Зелений"));
-              Navigator.of(context).pop();
-            },
-            style: ElevatedButton.styleFrom(
-                primary: diyaDocumentsColors['pages'],
-                textStyle: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w300,
-                    fontFamily: 'eUkraine'))),
-        ElevatedButton(
-            child: const Text("Жовтий(1 доза)",
-                style: TextStyle(color: Colors.black)),
-            onPressed: () {
-              addRequest(CertificateRequest(DateTime.now(), "Жовтий"));
-              Navigator.of(context).pop();
-            },
-            style: ElevatedButton.styleFrom(
-                primary: diyaDocumentsColors['pages'],
-                textStyle: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w300,
-                    fontFamily: 'eUkraine'))),
-        ElevatedButton(
-            child: const Text("Назад", style: TextStyle(color: Colors.black)),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            style: ElevatedButton.styleFrom(
-                primary: diyaDocumentsColors['pages'],
-                textStyle: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w300,
-                    fontFamily: 'eUkraine'))),
-      ],
-    );
+    Widget alert = Consumer<RequestsList>(builder: (context, reqs, child) {
+      return AlertDialog(
+        backgroundColor: diyaWindowsColors['pages'],
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20))),
+        titleTextStyle: TextStyle(
+            fontSize: 22,
+            color: Colors.black,
+            fontWeight: FontWeight.w700,
+            fontFamily: 'eUkraine'),
+        titlePadding: EdgeInsets.fromLTRB(24, 24, 12, 24),
+        title: Text("Підтвердження заявки"),
+        contentTextStyle: TextStyle(
+            fontSize: 16,
+            color: Colors.black,
+            fontWeight: FontWeight.w500,
+            fontFamily: 'eUkraine'),
+        content: Text("Заявку на який сертифікат ви хочете отримати?"),
+        actions: [
+          ElevatedButton(
+              child: Text(
+                "Зелений",
+                style: TextStyle(color: Colors.black),
+              ),
+              onPressed: () {
+                reqs.addReq(CertificateRequest(DateTime.now(), "Зелений"));
+                Navigator.of(context).pop();
+              },
+              style: ElevatedButton.styleFrom(
+                  primary: diyaDocumentsColors['pages'],
+                  textStyle: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w300,
+                      fontFamily: 'eUkraine'))),
+          ElevatedButton(
+              child: const Text("Жовтий(1 доза)",
+                  style: TextStyle(color: Colors.black)),
+              onPressed: () {
+                reqs.addReq(CertificateRequest(DateTime.now(), "Жовтий"));
+                Navigator.of(context).pop();
+              },
+              style: ElevatedButton.styleFrom(
+                  primary: diyaDocumentsColors['pages'],
+                  textStyle: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w300,
+                      fontFamily: 'eUkraine'))),
+          ElevatedButton(
+              child: const Text("Назад", style: TextStyle(color: Colors.black)),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              style: ElevatedButton.styleFrom(
+                  primary: diyaDocumentsColors['pages'],
+                  textStyle: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w300,
+                      fontFamily: 'eUkraine'))),
+        ],
+      );
+    });
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -214,7 +199,7 @@ class ServicesPage extends StatelessWidget {
               style: TextStyle(color: Colors.black),
             ),
             onPressed: () {
-              requestsList.clear();
+              Provider.of<RequestsList>(context, listen: false).removeAll();
               Navigator.of(context).pop();
             },
             style: ElevatedButton.styleFrom(

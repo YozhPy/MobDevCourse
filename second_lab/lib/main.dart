@@ -1,50 +1,26 @@
 // ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'components.dart';
 import 'models/request.dart';
+import 'package:provider/provider.dart';
 
-void main() => runApp(DiyaApp());
+void main() => runApp(ChangeNotifierProvider(
+    create: (context) => RequestsList(), child: DiyaApp()));
 
 class DiyaApp extends StatefulWidget {
   const DiyaApp({Key? key}) : super(key: key);
 
   @override
-  DiyaAppState createState() => DiyaAppState();
+  State<DiyaApp> createState() => DiyaAppState();
 }
 
 class DiyaAppState extends State<DiyaApp> with SingleTickerProviderStateMixin {
-  late TabController controller;
-  int cIndex = 0;
-  int cRequests = 0;
+  int _cIndex = 0;
 
-  // CREATE OUR WINDOWS
-  void _addRequestTap(CertificateRequest req) {
+  void _handlePageTap(int index) {
     setState(() {
-      cRequests < 10 ? cRequests += 1 : cRequests = 1;
-      requestsList[cRequests] = req;
+      _cIndex = index;
     });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    controller = TabController(length: 4, vsync: this);
-    controller.addListener(() {
-      setState(() {
-        cIndex = controller.index;
-      });
-    });
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  TabBarView makeTabBarView(tabs) {
-    return TabBarView(children: tabs, controller: controller);
   }
 
   @override
@@ -56,7 +32,6 @@ class DiyaAppState extends State<DiyaApp> with SingleTickerProviderStateMixin {
         documentText: '''Дата народження: 26.12.2000
                        Дійсний до: 09.10.2022
                        Номер\nсертифікату: URN:ASDJANSFOJNASFJIASFNasjdifn''',
-        addRequest: _addRequestTap,
       ),
       Diya(
         colorName: 'purple',
@@ -64,7 +39,6 @@ class DiyaAppState extends State<DiyaApp> with SingleTickerProviderStateMixin {
         documentText: '''Дата народження: 26.12.2000
                        Дійсний до: 09.10.2022
                        Номер: F534516549''',
-        addRequest: _addRequestTap,
       ),
       Diya(
         colorName: 'blue',
@@ -72,7 +46,6 @@ class DiyaAppState extends State<DiyaApp> with SingleTickerProviderStateMixin {
         documentText: '''Дата народження: 26.12.2000
                        Дійсний до: 01.01.2050
                        Номер:\n ZxC322ZxC''',
-        addRequest: _addRequestTap,
       ),
       Diya(
         colorName: 'purple',
@@ -81,16 +54,11 @@ class DiyaAppState extends State<DiyaApp> with SingleTickerProviderStateMixin {
                        Форма навчання: Денна
                        Дійсний до: 30.06.2022
                        \nНТУУ "КПІ" ім. Ігоря Сікорського ''',
-        addRequest: _addRequestTap,
       ),
     ];
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          body: TabBarView(
-            children: _tabs,
-            controller: controller,
-          ),
-        ));
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(body: _tabs.elementAt(_cIndex)),
+    );
   }
 }
