@@ -1,27 +1,32 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:second_lab/models/request.dart';
+import 'package:second_lab/models/change_theme.dart';
 import '../components.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/cupertino.dart';
 
+// ignore: must_be_immutable
 class NotificationPage extends StatelessWidget {
-  const NotificationPage({
-    Key? key,
-  }) : super(key: key);
+  late ThemeProvider thm;
+  late List<Widget> Function(BuildContext context, ThemeProvider thm)
+      getListItems;
+
+  NotificationPage(
+      {Key? key,
+      ThemeProvider? thm,
+      List<Widget> Function(BuildContext context, ThemeProvider thm)?
+          getListItems})
+      : super(key: key) {
+    this.getListItems = getListItems!;
+    this.thm = thm!;
+  }
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> curNotifications = [];
-    int index = 0;
-    Provider.of<RequestsList>(context, listen: false).items.forEach((element) {
-      curNotifications.add(Notif(id: index, req: element).build(context));
-      index += 1;
-    });
     return Container(
-        decoration: BoxDecoration(color: diyaWindowsColors['pages']),
+        decoration:
+            BoxDecoration(color: DiyaAppColors(thm.darkTheme).windowColor),
         child: Column(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -53,7 +58,7 @@ class NotificationPage extends StatelessWidget {
                       ])),
               SizedBox(height: 50),
               Column(
-                children: curNotifications,
+                children: getListItems(context, thm),
               )
             ]));
   }

@@ -82,7 +82,7 @@ class ServicesPage extends StatelessWidget {
                                     thickness: 3,
                                   ),
                                   const SizedBox(height: 10),
-                                  for (int i = 0; i < 2; i++)
+                                  for (int i = 0; i < 5; i++)
                                     GestureDetector(
                                       onTap: () {
                                         showAlertDialog(context);
@@ -175,52 +175,54 @@ class ServicesPage extends StatelessWidget {
 
   showKillDialog(BuildContext context) {
     // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      backgroundColor: diyaWindowsColors['pages'],
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(20))),
-      titleTextStyle: TextStyle(
-          fontSize: 22,
-          color: Colors.black,
-          fontWeight: FontWeight.w700,
-          fontFamily: 'eUkraine'),
-      titlePadding: EdgeInsets.fromLTRB(24, 24, 12, 24),
-      title: Text("Видалення всіх заявок"),
-      contentTextStyle: TextStyle(
-          fontSize: 16,
-          color: Colors.black,
-          fontWeight: FontWeight.w500,
-          fontFamily: 'eUkraine'),
-      content: Text("Ви справді хочете видалити всі заявки?"),
-      actions: [
-        ElevatedButton(
-            child: Text(
-              "Так",
-              style: TextStyle(color: Colors.black),
-            ),
-            onPressed: () {
-              Provider.of<RequestsList>(context, listen: false).removeAll();
-              Navigator.of(context).pop();
-            },
-            style: ElevatedButton.styleFrom(
-                primary: diyaDocumentsColors['pages'],
-                textStyle: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w300,
-                    fontFamily: 'eUkraine'))),
-        ElevatedButton(
-            child: const Text("Ні", style: TextStyle(color: Colors.black)),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            style: ElevatedButton.styleFrom(
-                primary: diyaDocumentsColors['pages'],
-                textStyle: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w300,
-                    fontFamily: 'eUkraine'))),
-      ],
-    );
+    Widget alert = Consumer<RequestsList>(builder: (context, reqs, child) {
+      return AlertDialog(
+        backgroundColor: diyaWindowsColors['pages'],
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20))),
+        titleTextStyle: TextStyle(
+            fontSize: 22,
+            color: Colors.black,
+            fontWeight: FontWeight.w700,
+            fontFamily: 'eUkraine'),
+        titlePadding: EdgeInsets.fromLTRB(24, 24, 12, 24),
+        title: Text("Видалення всіх заявок"),
+        contentTextStyle: TextStyle(
+            fontSize: 16,
+            color: Colors.black,
+            fontWeight: FontWeight.w500,
+            fontFamily: 'eUkraine'),
+        content: Text("Ви справді хочете видалити всі заявки?"),
+        actions: [
+          ElevatedButton(
+              child: Text(
+                "Так",
+                style: TextStyle(color: Colors.black),
+              ),
+              onPressed: () {
+                reqs.removeAll();
+                Navigator.of(context).pop();
+              },
+              style: ElevatedButton.styleFrom(
+                  primary: diyaDocumentsColors['pages'],
+                  textStyle: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w300,
+                      fontFamily: 'eUkraine'))),
+          ElevatedButton(
+              child: const Text("Ні", style: TextStyle(color: Colors.black)),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              style: ElevatedButton.styleFrom(
+                  primary: diyaDocumentsColors['pages'],
+                  textStyle: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w300,
+                      fontFamily: 'eUkraine'))),
+        ],
+      );
+    });
     showDialog(
       context: context,
       builder: (BuildContext context) {

@@ -1,21 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:second_lab/models/change_theme.dart';
 import '../components.dart';
 import 'package:flutter/painting.dart';
 
-class DocumentPage extends StatelessWidget {
-  final String colorName, documentName, documentText;
+// ignore: must_be_immutable
+class DocumentPage extends StatefulWidget {
+  late ThemeProvider thm;
+  late void Function(bool?) changeThemeTap;
 
-  const DocumentPage({
+  final String documentName, documentText;
+
+  DocumentPage({
     Key? key,
-    required this.colorName,
     required this.documentName,
     required this.documentText,
-  }) : super(key: key);
+    ThemeProvider? thm,
+  }) : super(key: key) {
+    this.thm = thm!;
+  }
+
+  @override
+  State<DocumentPage> createState() => _DocumentPageState();
+}
+
+class _DocumentPageState extends State<DocumentPage> {
+  void _changeThemeOnTap(bool? value) {
+    value ??= false;
+    setState(() {
+      widget.thm.darkTheme = value!;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: BoxDecoration(color: diyaWindowsColors[colorName]),
+        decoration: BoxDecoration(
+            color: DiyaAppColors(widget.thm.darkTheme).windowColor),
         child: Padding(
             padding: const EdgeInsets.only(top: 60),
             child: Column(
@@ -26,22 +46,25 @@ class DocumentPage extends StatelessWidget {
                       padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
                       child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            Image(
+                          children: [
+                            const Image(
                               image: AssetImage("assets/main_logo.png"),
                               width: 50.0,
                               height: 50.0,
                             ),
-                            Icon(Icons.qr_code_scanner, size: 30)
+                            Switch(
+                              value: widget.thm.darkTheme,
+                              onChanged: _changeThemeOnTap,
+                              activeColor: Colors.black,
+                            ),
                           ])),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(40, 40, 40, 0),
                     child: Document(
-                      documentName: documentName,
+                      isCustomTheme: widget.thm.darkTheme,
+                      documentName: widget.documentName,
                       imageSrc: "assets/4head_2.jpg",
-                      documentText: documentText,
-                      colorName: colorName,
-                      borders: colorName,
+                      documentText: widget.documentText,
                     ),
                   ),
                   const Padding(

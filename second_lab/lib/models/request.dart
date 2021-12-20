@@ -22,7 +22,6 @@ class RequestsList extends ChangeNotifier {
   CertificateRequest getByIndex(int id) => _items[id];
 
   void addReq(CertificateRequest item) {
-    //cRequests < 10 ? cRequests += 1 : cRequests = 1;
     if (currentLength > 10) {
       removeAll();
     }

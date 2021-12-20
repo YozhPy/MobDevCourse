@@ -2,129 +2,54 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'pages/documents.dart';
-import 'pages/services.dart';
-import 'pages/notifications.dart';
 import 'models/request.dart';
 
 const diyaWindowsColors = <String, Color>{
-  'blue': Color(0xffb3c9e8),
   'purple': Color(0xffa8a9ea),
   'green': Color(0xffC0EBB5),
-  'flesh': Color(0xffF8D6CD),
   'pages': Color(0xffC6D9E8)
 };
 
 const diyaDocumentsColors = <String, Color>{
-  'blue': Color(0xffB9D8EC),
   'purple': Color(0xffD6E2F2),
   'green': Color(0xffE7F4E3),
-  'flesh': Color(0xffF8D6CD),
   'pages': Color(0xffE1EBF4),
 };
 
 const diyaDocumentsBorders = <String, Color>{
-  'blue': Color(0xff7FAECC),
   'purple': Color(0xffB8C8E2),
   'green': Color(0xffC0EBB5),
-  'flesh': Color(0xffF8D6CD),
 };
 
 //Map<int, CertificateRequest> requestsList = {};
 
-class Diya extends StatefulWidget {
-  final String colorName, documentName, documentText;
+class DiyaAppColors {
+  late Color windowColor;
+  late Color docColor;
+  late Color borderColor;
+  late Color windowPages = Color(0xffC6D9E8);
+  late Color docPages = Color(0xffE1EBF4);
 
-  const Diya({
-    Key? key,
-    required this.colorName,
-    required this.documentName,
-    required this.documentText,
-  }) : super(key: key);
-
-  @override
-  State<Diya> createState() => _DiyaState();
-}
-
-//ADD PAGE VIEW
-class _DiyaState extends State<Diya> {
-  int _cIndex = 0;
-
-  void _handlePages(int index) {
-    setState(() {
-      _cIndex = index;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    List<StatelessWidget> _widgetShow = <StatelessWidget>[
-      DocumentPage(
-        colorName: widget.colorName,
-        documentName: widget.documentName,
-        documentText: widget.documentText,
-      ),
-      ServicesPage(),
-      NotificationPage(),
-      NotificationPage()
-    ];
-    return Scaffold(
-      body: LayoutBuilder(builder: (context, constraint) {
-        return SingleChildScrollView(
-            child: ConstrainedBox(
-                constraints: BoxConstraints(minHeight: constraint.maxHeight),
-                child: _widgetShow.elementAt(_cIndex)));
-      }),
-      bottomNavigationBar: SizedBox(
-        height: 80,
-        child: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          unselectedFontSize: 12,
-          selectedFontSize: 12,
-          elevation: 0.0,
-          iconSize: 30,
-          backgroundColor: _cIndex == 0
-              ? diyaWindowsColors[widget.colorName]
-              : diyaDocumentsColors['pages'],
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-                icon: Icon(Icons.feed_outlined),
-                label: 'Документи',
-                activeIcon: Icon(Icons.feed_sharp)),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.textsms_outlined),
-                label: 'Послуги',
-                activeIcon: Icon(Icons.textsms_sharp)),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.doorbell_outlined),
-                label: 'Повідомлення',
-                activeIcon: Icon(Icons.doorbell_sharp)),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.menu_outlined),
-                label: 'Меню',
-                activeIcon: Icon(Icons.menu_sharp)),
-          ],
-          selectedItemColor: Colors.black,
-          unselectedItemColor: Colors.black,
-          onTap: _handlePages,
-          currentIndex: _cIndex,
-        ),
-      ),
-    );
+  DiyaAppColors([bool isPur = false]) {
+    windowColor =
+        (isPur ? diyaWindowsColors['purple'] : diyaWindowsColors['green'])!;
+    docColor =
+        (isPur ? diyaDocumentsColors['purple'] : diyaDocumentsColors['green'])!;
+    borderColor = Colors.black;
   }
 }
 
 class Document extends StatefulWidget {
-  final String documentName, imageSrc, documentText, colorName, borders;
+  final String documentName, imageSrc, documentText;
+  final bool isCustomTheme;
 
-  const Document(
-      {Key? key,
-      required this.documentName,
-      required this.imageSrc,
-      required this.documentText,
-      required this.colorName,
-      required this.borders})
-      : super(key: key);
+  const Document({
+    Key? key,
+    required this.documentName,
+    required this.imageSrc,
+    required this.documentText,
+    required this.isCustomTheme,
+  }) : super(key: key);
 
   @override
   State<Document> createState() {
@@ -147,7 +72,7 @@ class _DocumentState extends State<Document> {
         width: 330.0,
         height: 460.0,
         decoration: BoxDecoration(
-          color: diyaDocumentsColors[widget.colorName],
+          color: DiyaAppColors(widget.isCustomTheme).docColor,
           borderRadius: const BorderRadius.all(Radius.circular(10)),
           boxShadow: [
             BoxShadow(
@@ -208,8 +133,9 @@ class _DocumentState extends State<Document> {
                               decoration: BoxDecoration(
                                   border: Border.all(
                                       width: 2.0,
-                                      color: (diyaDocumentsBorders[
-                                          widget.borders])!),
+                                      color:
+                                          (DiyaAppColors(widget.isCustomTheme)
+                                              .borderColor)),
                                   image: DecorationImage(
                                     fit: BoxFit.cover,
                                     image: AssetImage(widget.imageSrc),
@@ -237,7 +163,8 @@ class _DocumentState extends State<Document> {
                       Padding(
                         padding: const EdgeInsets.only(top: 15),
                         child: Divider(
-                          color: (diyaDocumentsBorders[widget.borders])!,
+                          color:
+                              (DiyaAppColors(widget.isCustomTheme).borderColor),
                           thickness: 3,
                         ),
                       ),
@@ -271,14 +198,15 @@ class _DocumentState extends State<Document> {
   }
 }
 
-class Notif extends StatelessWidget {
+class Notiff extends StatelessWidget {
   final int id;
   final CertificateRequest req;
-
-  const Notif({
+  final bool isDarkTheme;
+  const Notiff({
     Key? key,
     required this.id,
     required this.req,
+    required this.isDarkTheme,
   }) : super(key: key);
 
   @override
@@ -289,7 +217,7 @@ class Notif extends StatelessWidget {
         margin: EdgeInsets.only(bottom: 15),
         padding: const EdgeInsets.fromLTRB(15, 8, 15, 0),
         decoration: BoxDecoration(
-          color: diyaDocumentsColors['pages'],
+          color: DiyaAppColors(!isDarkTheme).windowColor,
           borderRadius: const BorderRadius.all(Radius.circular(15)),
           boxShadow: [
             BoxShadow(
@@ -315,7 +243,7 @@ class Notif extends StatelessWidget {
               ),
             ),
             Divider(
-              color: diyaWindowsColors['pages'],
+              color: DiyaAppColors(!isDarkTheme).borderColor,
               thickness: 3,
             ),
             SizedBox(
@@ -406,7 +334,7 @@ class Notif extends StatelessWidget {
               height: 3,
             ),
             Divider(
-              color: diyaWindowsColors['pages'],
+              color: DiyaAppColors(isDarkTheme).borderColor,
               thickness: 3,
             ),
             Container(
