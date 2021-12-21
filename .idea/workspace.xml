@@ -4,7 +4,17 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="443c3e33-5fa5-461b-9c3f-75d164a9bf3a" name="Default Changelist" comment="" />
+    <list default="true" id="443c3e33-5fa5-461b-9c3f-75d164a9bf3a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/second_lab/lib/components.dart" beforeDir="false" afterPath="$PROJECT_DIR$/second_lab/lib/components.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/second_lab/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/second_lab/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/second_lab/lib/models/request.dart" beforeDir="false" afterPath="$PROJECT_DIR$/second_lab/lib/models/request.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/second_lab/lib/pages/documents.dart" beforeDir="false" afterPath="$PROJECT_DIR$/second_lab/lib/pages/documents.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/second_lab/lib/pages/notifications.dart" beforeDir="false" afterPath="$PROJECT_DIR$/second_lab/lib/pages/notifications.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/second_lab/lib/pages/services.dart" beforeDir="false" afterPath="$PROJECT_DIR$/second_lab/lib/pages/services.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/second_lab/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/second_lab/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/second_lab/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/second_lab/pubspec.yaml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -22,7 +32,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="dart.analysis.tool.window.visible" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../MobileDevTempFiles/mobile-device-software-development-flutter-second_lab_1" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
     <property name="show.migrate.to.gradle.popup" value="false" />
   </component>
@@ -48,7 +58,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="master" />
+                        <option value="fourth_lab_1" />
                       </list>
                     </value>
                   </entry>

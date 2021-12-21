@@ -1,97 +1,115 @@
-// ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
-import 'components.dart';
-import 'models/request.dart';
-import 'package:provider/provider.dart';
 
-void main() => runApp(ChangeNotifierProvider(
-    create: (context) => RequestsList(), child: DiyaApp()));
+void main() {
+  runApp(const AnimationApp());
+}
 
-class DiyaApp extends StatelessWidget {
-  const DiyaApp({Key? key}) : super(key: key);
+class AnimationApp extends StatelessWidget {
+  const AnimationApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          body: Diya(
-            colorName: 'green',
-            documentName: "Внутрішній\nCOVID19-сертифікат",
-            documentText: '''Дата народження: 26.12.2000
-                       Дійсний до: 09.10.2022
-                       Номер\nсертифікату: URN:ASDJANSFOJNASFJIASFNasjdifn''',
-          ),
-        ));
+    return const MaterialApp(
+      title: "Animation",
+      home: ShowAnimation(),
+    );
   }
 }
 
-  // @override
-  // State<DiyaApp> createState() => DiyaAppState();
+class ShowAnimation extends StatefulWidget {
+  const ShowAnimation({Key? key}) : super(key: key);
 
-// // class DiyaAppState extends State<DiyaApp> {
-// //   int _cIndex = 0;
+  @override
+  _ShowAnimationState createState() => _ShowAnimationState();
+}
 
-// //   void _handlePageTap(int index) {
-// //     setState(() {
-// //       _cIndex = index;
-// //     });
-// //   }
+class _ShowAnimationState extends State<ShowAnimation>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _curveAnimation;
 
-//   @override
-//   Widget build(BuildContext context) {
-    // List<Widget> _tabs = <Widget>[
-    //   Diya(
-    //     colorName: 'green',
-    //     documentName: "Внутрішній\nCOVID19-сертифікат",
-    //     documentText: '''Дата народження: 26.12.2000
-    //                    Дійсний до: 09.10.2022
-    //                    Номер\nсертифікату: URN:ASDJANSFOJNASFJIASFNasjdifn''',
-    //   ),
-    //   Diya(
-    //     colorName: 'purple',
-    //     documentName: "Закордонний\nПаспорт <тризуб>",
-    //     documentText: '''Дата народження: 26.12.2000
-    //                    Дійсний до: 09.10.2022
-    //                    Номер: F534516549''',
-    //   ),
-    //   Diya(
-    //     colorName: 'blue',
-    //     documentName: "Паспорт громадянина\nУкраїни <тризуб>",
-    //     documentText: '''Дата народження: 26.12.2000
-    //                    Дійсний до: 01.01.2050
-    //                    Номер:\n ZxC322ZxC''',
-    //   ),
-    //   Diya(
-    //     colorName: 'purple',
-    //     documentName: "Студентський\nквиток",
-    //     documentText: '''КВ 12225356
-    //                    Форма навчання: Денна
-    //                    Дійсний до: 30.06.2022
-    //                    \nНТУУ "КПІ" ім. Ігоря Сікорського ''',
-    //   ),
-    // ];
-    // // @override
-    // // void initState() {
-    //   super.initState();
-    //   controller = TabController(length: 4, vsync: this);
-    //   controller.addListener(() {
-    //     setState(() {
-    //       _cIndex = controller.index;
-    //     });
-    //   });
-    // }
+  late ColorTween _changeColorTween;
+  late Tween<double> _changeSizeTween;
+  late AlignmentTween _changeAlignmentTween;
 
-    // @override
-    // void dispose() {
-    //   controller.dispose();
-    //   super.dispose();
-    // }
+  @override
+  void initState() {
+    super.initState();
+    _controller =
+        AnimationController(vsync: this, duration: const Duration(seconds: 2));
+    _curveAnimation =
+        CurvedAnimation(parent: _controller, curve: Curves.easeIn);
 
-    // TabBarView makeTabBarView(tabs) {
-    //   return TabBarView(children: tabs, controller: controller);
-    // }
+    _changeColorTween = ColorTween(begin: Colors.yellow, end: Colors.blue[100]);
+    _changeSizeTween = Tween<double>(begin: 100.0, end: 420.0);
+    _changeAlignmentTween =
+        AlignmentTween(begin: Alignment.bottomLeft, end: Alignment.bottomRight);
 
-//      );
-//   }
-// }
+    _controller.addListener(() {
+      setState(() {});
+    });
+
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _controller.reverse();
+      } else if (status == AnimationStatus.dismissed) {
+        _controller.forward();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        padding: EdgeInsets.fromLTRB(10, 30, 10, 30),
+        color: Colors.white,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                color: Colors.black26,
+                height: 150,
+                width: _changeSizeTween.evaluate(_curveAnimation),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                color: _changeColorTween.evaluate(_curveAnimation),
+                height: 50,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Align(
+                alignment: _changeAlignmentTween.evaluate(_curveAnimation),
+                child: Container(
+                  width: 150,
+                  color: Colors.amber,
+                  height: 100,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          if (_controller.isAnimating) {
+            _controller.stop();
+          } else {
+            _controller.forward();
+          }
+        },
+      ),
+    );
+  }
+}
