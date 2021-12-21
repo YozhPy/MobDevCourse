@@ -40,7 +40,7 @@ class _ShowAnimationState extends State<ShowAnimation>
     _curveAnimation =
         CurvedAnimation(parent: _controller, curve: Curves.easeIn);
 
-    _changeColorTween = ColorTween(begin: Colors.yellow, end: Colors.blue[100]);
+    _changeColorTween = ColorTween(begin: Colors.yellow, end: Colors.blue);
     _changeSizeTween = Tween<double>(begin: 100.0, end: 420.0);
     _changeAlignmentTween =
         AlignmentTween(begin: Alignment.bottomLeft, end: Alignment.bottomRight);
@@ -58,7 +58,7 @@ class _ShowAnimationState extends State<ShowAnimation>
     });
   }
 
-  @override
+  @override 
   void dispose() {
     _controller.dispose();
     super.dispose();
@@ -82,13 +82,6 @@ class _ShowAnimationState extends State<ShowAnimation>
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Container(
-                color: _changeColorTween.evaluate(_curveAnimation),
-                height: 50,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
               child: Align(
                 alignment: _changeAlignmentTween.evaluate(_curveAnimation),
                 child: Container(
@@ -96,6 +89,13 @@ class _ShowAnimationState extends State<ShowAnimation>
                   color: Colors.amber,
                   height: 100,
                 ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                color: _changeColorTween.evaluate(_curveAnimation),
+                height: 50,
               ),
             ),
           ],
